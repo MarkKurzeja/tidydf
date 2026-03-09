@@ -1,14 +1,14 @@
 import pandas as pd
 import pytest
 
-import betterdf
+import tidydf
 
 
 @pytest.fixture(autouse=True)
 def _patch():
-    betterdf.patch()
+    tidydf.patch()
     yield
-    betterdf.unpatch()
+    tidydf.unpatch()
 
 
 @pytest.fixture
@@ -87,7 +87,7 @@ class TestDeselect:
 
 class TestPatchUnpatch:
     def test_unpatch_removes_methods(self):
-        betterdf.unpatch()
+        tidydf.unpatch()
         assert not hasattr(pd.DataFrame, "select")
         assert not hasattr(pd.DataFrame, "deselect")
         assert not hasattr(pd.DataFrame, "keep")
@@ -96,10 +96,10 @@ class TestPatchUnpatch:
         assert not hasattr(pd.DataFrame, "peek")
         assert not hasattr(pd.DataFrame, "assert_types")
         # re-patch for other tests
-        betterdf.patch()
+        tidydf.patch()
 
     def test_patch_is_idempotent(self):
-        betterdf.patch()
-        betterdf.patch()
+        tidydf.patch()
+        tidydf.patch()
         df = pd.DataFrame({"a": [1]})
         assert list(df.select("a").columns) == ["a"]

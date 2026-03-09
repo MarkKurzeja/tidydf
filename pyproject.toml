@@ -1,5 +1,5 @@
 [project]
-name = "betterdf"
+name = "tidydf"
 version = "0.1.0"
 description = "Better DataFrame operations for pandas"
 readme = "README.md"

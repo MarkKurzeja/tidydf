@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 import pandas as pd
 from tqdm import tqdm
 
-from betterdf._strict_series import _DROP, StrictSeries
+from tidydf._strict_series import _DROP, StrictSeries
 
 
 def _get_func_name(fn) -> str:

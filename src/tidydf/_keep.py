@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from betterdf._strict_series import StrictSeries
+from tidydf._strict_series import StrictSeries
 
 
 def _keep(self: pd.DataFrame, fn) -> pd.DataFrame:

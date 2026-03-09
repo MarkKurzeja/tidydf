@@ -1,20 +1,20 @@
-# betterdf
+# tidydf
 
 Ergonomic DataFrame methods for pandas. Monkey-patches `pd.DataFrame` with strict, expressive helpers for column selection, row filtering, type checking, and row-wise transforms.
 
 ## Installation
 
 ```bash
-pip install betterdf
+pip install tidydf
 ```
 
 ## Quick start
 
 ```python
-import betterdf
+import tidydf
 import pandas as pd
 
-betterdf.patch()  # adds methods to pd.DataFrame
+tidydf.patch()  # adds methods to pd.DataFrame
 
 df = pd.DataFrame({
     "name": ["alice", "bob", "carol"],
@@ -75,14 +75,14 @@ df.mutate(
 
 ### `df.vapply(fn) -> DataFrame`
 
-Serial row-wise apply with a tqdm progress bar. `fn` receives a `StrictSeries` and returns a `pd.Series`. Return `betterdf.DROP` to drop a row.
+Serial row-wise apply with a tqdm progress bar. `fn` receives a `StrictSeries` and returns a `pd.Series`. Return `tidydf.DROP` to drop a row.
 
 ```python
-import betterdf
+import tidydf
 
 def transform(r):
     if r.score < 50:
-        return betterdf.DROP
+        return tidydf.DROP
     return pd.Series({"name": r.name, "passed": True})
 
 df.vapply(transform)
@@ -151,6 +151,6 @@ df.keep(lambda r: r.naem > 5)  # AttributeError: Column 'naem' not found
 ## Patching and unpatching
 
 ```python
-betterdf.patch()    # add all methods to pd.DataFrame
-betterdf.unpatch()  # remove them
+tidydf.patch()    # add all methods to pd.DataFrame
+tidydf.unpatch()  # remove them
 ```

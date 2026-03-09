@@ -2,14 +2,14 @@ import numpy as np
 import pandas as pd
 import pytest
 
-import betterdf
+import tidydf
 
 
 @pytest.fixture(autouse=True)
 def _patch():
-    betterdf.patch()
+    tidydf.patch()
     yield
-    betterdf.unpatch()
+    tidydf.unpatch()
 
 
 class TestAssertTypes:
