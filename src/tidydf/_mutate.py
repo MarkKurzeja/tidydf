@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from betterdf._strict_series import StrictSeries
+from tidydf._strict_series import StrictSeries
 
 
 def _mutate(self: pd.DataFrame, **columns) -> pd.DataFrame:

@@ -1,15 +1,15 @@
 import pandas as pd
 import pytest
 
-import betterdf
-from betterdf import DROP
+import tidydf
+from tidydf import DROP
 
 
 @pytest.fixture(autouse=True)
 def _patch():
-    betterdf.patch()
+    tidydf.patch()
     yield
-    betterdf.unpatch()
+    tidydf.unpatch()
 
 
 @pytest.fixture
