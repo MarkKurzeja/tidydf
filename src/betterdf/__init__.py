@@ -7,7 +7,9 @@ from betterdf._assert_types import _assert_types
 from betterdf._cast import _cast
 from betterdf._collapse import _collapse
 from betterdf._keep import _keep
+from betterdf._mutate import _mutate
 from betterdf._peek import _peek
+from betterdf._relabel import _relabel
 from betterdf._select import _deselect, _select
 from betterdf._strict_series import _DROP
 
@@ -22,6 +24,8 @@ _METHODS = {
     "assert_types": _assert_types,
     "cast": _cast,
     "collapse": _collapse,
+    "mutate": _mutate,
+    "relabel": _relabel,
     "peek": _peek,
 }
 
