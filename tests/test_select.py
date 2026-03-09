@@ -1,7 +1,14 @@
 import pandas as pd
 import pytest
 
-from betterdf import patch  # noqa: F401 — registers the accessor
+import betterdf
+
+
+@pytest.fixture(autouse=True)
+def _patch():
+    betterdf.patch()
+    yield
+    betterdf.unpatch()
 
 
 @pytest.fixture
@@ -48,3 +55,51 @@ class TestSelect:
     def test_select_column_order_matches_args(self, df):
         result = df.select("burrito", "taco")
         assert list(result.columns) == ["burrito", "taco"]
+
+
+class TestDeselect:
+    def test_deselect_single_column(self, df):
+        result = df.deselect("burrito")
+        assert list(result.columns) == ["taco", "nacho"]
+
+    def test_deselect_multiple_columns(self, df):
+        result = df.deselect("taco", "burrito")
+        assert list(result.columns) == ["nacho"]
+
+    def test_deselect_preserves_data(self, df):
+        result = df.deselect("burrito")
+        assert result["taco"].tolist() == [1, 2]
+        assert result["nacho"].tolist() == [3, 4]
+
+    def test_deselect_missing_column_raises(self, df):
+        with pytest.raises(KeyError, match="salsa"):
+            df.deselect("salsa")
+
+    def test_deselect_no_args_raises(self, df):
+        with pytest.raises(ValueError):
+            df.deselect()
+
+    def test_deselect_preserves_index(self, df):
+        df.index = [10, 20]
+        result = df.deselect("burrito")
+        assert result.index.tolist() == [10, 20]
+
+
+class TestPatchUnpatch:
+    def test_unpatch_removes_methods(self):
+        betterdf.unpatch()
+        assert not hasattr(pd.DataFrame, "select")
+        assert not hasattr(pd.DataFrame, "deselect")
+        assert not hasattr(pd.DataFrame, "keep")
+        assert not hasattr(pd.DataFrame, "vapply")
+        assert not hasattr(pd.DataFrame, "papply")
+        assert not hasattr(pd.DataFrame, "peek")
+        assert not hasattr(pd.DataFrame, "assert_types")
+        # re-patch for other tests
+        betterdf.patch()
+
+    def test_patch_is_idempotent(self):
+        betterdf.patch()
+        betterdf.patch()
+        df = pd.DataFrame({"a": [1]})
+        assert list(df.select("a").columns) == ["a"]
