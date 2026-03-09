@@ -4,6 +4,7 @@ import pandas as pd
 
 from betterdf._apply import _papply, _vapply
 from betterdf._assert_types import _assert_types
+from betterdf._collapse import _collapse
 from betterdf._keep import _keep
 from betterdf._peek import _peek
 from betterdf._select import _deselect, _select
@@ -18,6 +19,7 @@ _METHODS = {
     "vapply": _vapply,
     "papply": _papply,
     "assert_types": _assert_types,
+    "collapse": _collapse,
     "peek": _peek,
 }
 
